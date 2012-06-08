@@ -18,7 +18,6 @@ import com.moralesce.jbehave.examples.stories.StaffMemberLogsIn.MyStoryLoader;
 @RunWith(JUnitStoryRunner.class)
 @UsingEmbedder(embedder = Embedder.class)
 @UsingPaths(searchIn = "test", includes = { "**/*.story" })
-
 @Configure(storyLoader = MyStoryLoader.class, storyReporterBuilder = MyReportBuilder.class)
 @UsingSteps(instances = { LoginSteps.class })
 public class StaffMemberLogsIn {

@@ -28,21 +28,17 @@ public final class DescriptionGenerator {
 	}
 
 	private static Description createStoryDescription(Story story, Class<?> testClass) {
-		Description storyDescription = Description.createSuiteDescription(cleanStoryDescription(story.getDescription().toString()), new Annotation[0]);
+		if (story.getDescription().asString() == null) {
+			return null;
+		}
+
+		Description storyDescription = Description.createSuiteDescription(cleanStoryDescription(story.getDescription().asString()), new Annotation[0]);
 
 		int scenarioNumber = 1;
 		for (Scenario scenario : story.getScenarios()) {
 			storyDescription.addChild(createScenarioDescription(scenario, scenarioNumber, testClass));
 			scenarioNumber++;
 		}
-
-//		System.out.println(storyDescription.getDisplayName());
-//		for (Description scenario : storyDescription.getChildren()) {
-//			System.out.println("  " + scenario.getDisplayName());
-//			for (Description step : scenario.getChildren()) {
-//				System.out.println("    " + step.getDisplayName());
-//			}
-//		}
 
 		return storyDescription;
 	}

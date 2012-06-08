@@ -73,7 +73,6 @@ public class JUnitStoryReporter extends AbstractStoryReporter implements StoryRe
 	public void successful(String key) {
 		Description description = resolveStepDescription(key);
 		if (description != null) {
-			System.out.println("FOUND IT!!");
 			this.notifier.fireTestStarted(description);
 			this.notifier.fireTestFinished(description);
 		}
