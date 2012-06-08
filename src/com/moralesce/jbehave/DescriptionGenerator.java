@@ -32,7 +32,7 @@ public final class DescriptionGenerator {
 			return null;
 		}
 
-		Description storyDescription = Description.createSuiteDescription(cleanStoryDescription(story.getDescription().asString()), new Annotation[0]);
+		Description storyDescription = Description.createSuiteDescription(story.getDescription().asString(), new Annotation[0]);
 
 		int scenarioNumber = 1;
 		for (Scenario scenario : story.getScenarios()) {
@@ -41,10 +41,6 @@ public final class DescriptionGenerator {
 		}
 
 		return storyDescription;
-	}
-
-	private static String cleanStoryDescription(String description) {
-		return description.replace("Description[descriptionAsString=", "");
 	}
 
 	private static Description createScenarioDescription(Scenario scenario, Integer scenarioNumber, Class<?> testClass) {
