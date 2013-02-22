@@ -11,94 +11,135 @@ import org.jbehave.core.model.OutcomesTable;
 import org.jbehave.core.model.Scenario;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.model.StoryDuration;
+import org.jbehave.core.reporters.StoryReporter;
 
-public abstract class AbstractStoryReporter {
+public abstract class AbstractStoryReporter implements StoryReporter {
 
-	public void beforeStory(Story story, boolean arg1) {
+	protected int storyCounter;
+	protected int scenarioCounter;
+	protected int stepCounter;
 
+	@Override
+	public void beforeStory(Story story, boolean givenStory) {
+
+		if (story.getName().equals("BeforeStories") || story.getName().equals("AfterStories")) {
+			storyCounter = 0;
+			return;
+		}
+
+		storyCounter++;
+		scenarioCounter = 0;
 	}
 
+	@Override
 	public void afterExamples() {
 
 	}
 
+	@Override
 	public void afterScenario() {
 
 	}
 
-	public void afterStory(boolean arg0) {
+	@Override
+	public void afterStory(boolean givenStory) {
 
 	}
 
-	public void beforeExamples(List<String> arg0, ExamplesTable arg1) {
+	@Override
+	public void beforeExamples(List<String> steps, ExamplesTable table) {
 
 	}
 
-	public void beforeScenario(String arg0) {
+	@Override
+	public void beforeScenario(String scenarioTitle) {
 
+		scenarioCounter++;
+		stepCounter = 0;
 	}
 
-	public void beforeStep(String arg0) {
-
+	@Override
+	public void beforeStep(String step) {
+		stepCounter++;
 	}
 
+	@Override
 	public void dryRun() {
 
 	}
 
-	public void example(Map<String, String> arg0) {
+	@Override
+	public void example(Map<String, String> tableRow) {
+	}
+
+	@Override
+	public void failedOutcomes(String step, OutcomesTable table) {
 
 	}
 
-	public void failedOutcomes(String arg0, OutcomesTable arg1) {
+	@Override
+	public void givenStories(GivenStories stories) {
 
 	}
 
-	public void givenStories(GivenStories arg0) {
+	@Override
+	public void givenStories(List<String> stories) {
 
 	}
 
-	public void givenStories(List<String> arg0) {
+	@Override
+	public void ignorable(String step) {
+	}
+
+	@Override
+	public void narrative(Narrative narrative) {
+	}
+
+	@Override
+	public void notPerformed(String step) {
+	}
+
+	@Override
+	public void failed(String step, Throwable cause) {
 
 	}
 
-	public void ignorable(String arg0) {
+	@Override
+	public void pending(String step) {
 
 	}
 
-	public void narrative(Narrative arg0) {
+	@Override
+	public void successful(String step) {
 
 	}
 
-	public void notPerformed(String arg0) {
+	@Override
+	public void pendingMethods(List<String> pending) {
 
 	}
 
-	public void pending(String key) {
+	@Override
+	public void restarted(String step, Throwable cause) {
+	}
+
+	@Override
+	public void scenarioMeta(Meta meta) {
 
 	}
 
-	public void pendingMethods(List<String> arg0) {
+	@Override
+	public void scenarioNotAllowed(Scenario scenario, String filter) {
 
 	}
 
-	public void restarted(String arg0, Throwable arg1) {
+	@Override
+	public void storyCancelled(Story story, StoryDuration duration) {
 
 	}
 
-	public void scenarioMeta(Meta arg0) {
-
-	}
-
-	public void scenarioNotAllowed(Scenario arg0, String arg1) {
-
-	}
-
-	public void storyCancelled(Story arg0, StoryDuration arg1) {
-
-	}
-
-	public void storyNotAllowed(Story arg0, String arg1) {
+	@Override
+	public void storyNotAllowed(Story story, String filter) {
 
 	}
 

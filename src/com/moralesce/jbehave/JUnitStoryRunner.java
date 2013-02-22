@@ -1,36 +1,49 @@
 package com.moralesce.jbehave;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jbehave.core.configuration.AnnotationBuilder;
+import org.jbehave.core.embedder.Embedder.RunningStoriesFailed;
 import org.jbehave.core.embedder.StoryManager;
 import org.jbehave.core.junit.AnnotatedPathRunner;
+import org.jbehave.core.model.Story;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 
 public class JUnitStoryRunner extends AnnotatedPathRunner {
 
-	private static int storyCounter = 1;
 	private final Description description;
 
 	public JUnitStoryRunner(Class<?> testClass) throws Exception {
 		super(testClass);
 		AnnotationBuilder builder = new AnnotationBuilder(testClass);
 		StoryManager manager = builder.buildEmbedder().storyManager();
-		this.description = DescriptionGenerator.createDescription(manager.storyOfPath(builder.findPaths().get(0)), testClass);
-		storyCounter += 1;
+
+		List<Story> stories = new LinkedList<Story>();
+		for (String path : builder.findPaths()) {
+			stories.add(manager.storyOfPath(path));
+		}
+
+		this.description = DescriptionGenerator.createDescription(stories, testClass);
 	}
 
+	@Override
 	public Description getDescription() {
 		return this.description;
 	}
 
+	@Override
 	public void run(RunNotifier notifier) {
-		JUnitStoryReporter.withRunNotifier(notifier);
-		JUnitStoryReporter.withDescription(description);
+
+		JUnitStoryReporter.getInstance().setNotifier(notifier);
+		JUnitStoryReporter.getInstance().setDescription(description);
+
+		try {
 		super.run(notifier);
+		} catch (RunningStoriesFailed rsf) {
+			System.out.println(getClass().getSimpleName() + ": " + rsf.getClass().getSimpleName() + " ignored");
+			rsf.printStackTrace(System.out);
+		}
 	}
-
-	public static int getStoryCounter() {
-		return storyCounter;
-	}
-
 }
