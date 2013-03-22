@@ -1,5 +1,5 @@
 <project name="jbehave-junit-reporter-3" basedir=".">
-	<property name="version" value="0.6" />
+	<property name="version" value="0.6.1" />
 	<property name="name" value="jbehave-junit-reporter-3" />
 	<property name="bin.dir" value="binaries" />
 	<property name="src.dir" value="src" />
@@ -16,7 +16,7 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="${bin.dir}" />
-		<javac srcdir="src" destdir="${bin.dir}" debug="true" nowarn="true" includeantruntime="false">
+		<javac srcdir="src" destdir="${bin.dir}" debug="true" nowarn="true" includeantruntime="false" source="1.6" target="1.6">
 			<classpath>
 				<fileset dir="lib">
 					<include name="**/*.jar" />

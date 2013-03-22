@@ -12,12 +12,25 @@ import org.jbehave.core.model.Scenario;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.model.StoryDuration;
 import org.jbehave.core.reporters.StoryReporter;
+import org.junit.runner.Description;
+import org.junit.runner.notification.RunNotifier;
 
 public abstract class AbstractStoryReporter implements StoryReporter {
+
+	protected RunNotifier notifier;
+	protected Description suiteDescription;
 
 	protected int storyCounter;
 	protected int scenarioCounter;
 	protected int stepCounter;
+
+	protected void setNotifier(RunNotifier notifier) {
+		this.notifier = notifier;
+	}
+
+	protected void setDescription(Description description) {
+		this.suiteDescription = description;
+	}
 
 	@Override
 	public void beforeStory(Story story, boolean givenStory) {
@@ -142,5 +155,4 @@ public abstract class AbstractStoryReporter implements StoryReporter {
 	public void storyNotAllowed(Story story, String filter) {
 
 	}
-
 }

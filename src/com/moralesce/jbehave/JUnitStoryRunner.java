@@ -43,7 +43,6 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 		super.run(notifier);
 		} catch (RunningStoriesFailed rsf) {
 			System.out.println(getClass().getSimpleName() + ": " + rsf.getClass().getSimpleName() + " ignored");
-			rsf.printStackTrace(System.out);
 		}
 	}
 }

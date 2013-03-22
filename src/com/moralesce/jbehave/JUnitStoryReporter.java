@@ -2,12 +2,9 @@ package com.moralesce.jbehave;
 
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunNotifier;
 
 public class JUnitStoryReporter extends AbstractStoryReporter {
 
-	private RunNotifier notifier;
-	private Description suiteDescription;
 	Description scenario = null;
 	Description step = null;
 
@@ -18,14 +15,6 @@ public class JUnitStoryReporter extends AbstractStoryReporter {
 	}
 
 	private JUnitStoryReporter() {
-	}
-
-	void setNotifier(RunNotifier notifier) {
-		this.notifier = notifier;
-	}
-
-	void setDescription(Description description) {
-		this.suiteDescription = description;
 	}
 
 	@Override
@@ -55,6 +44,9 @@ public class JUnitStoryReporter extends AbstractStoryReporter {
 	public void failed(String key, Throwable cause) {
 		super.failed(key, cause);
 
+		if (step == null) {
+			step = scenario.getChildren().get(0);
+		}
 		this.notifier.fireTestFailure(new Failure(step, cause));
 		step = null;
 	}
