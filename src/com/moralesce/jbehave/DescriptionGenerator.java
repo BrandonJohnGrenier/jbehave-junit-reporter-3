@@ -15,7 +15,8 @@
  */
 package com.moralesce.jbehave;
 
-import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.Map;
 
 import org.jbehave.core.model.Scenario;
 import org.jbehave.core.model.Story;
@@ -23,41 +24,77 @@ import org.junit.runner.Description;
 
 public final class DescriptionGenerator {
 
-	public static Description createDescription(Story story, Class<?> testClass) {
-		return createStoryDescription(story, testClass);
+	private static final String COMMENT_PREFIX = "!--";
+
+	public static Description createDescription(List<Story> stories, Class<?> testClass) {
+
+		Description suite = Description.createSuiteDescription(testClass.getSimpleName());
+
+		int count = 0;
+		for (Story story : stories) {
+			count++;
+			suite.addChild(createStoryDescription(Integer.toString(count), story, testClass));
+		}
+
+		return suite;
 	}
 
-	private static Description createStoryDescription(Story story, Class<?> testClass) {
+	private static Description createStoryDescription(String prefix, Story story, Class<?> testClass) {
 		if (story.getDescription().asString() == null) {
 			return null;
 		}
 
-		Description storyDescription = Description.createSuiteDescription(story.getDescription().asString(), new Annotation[0]);
+		Description storyDescription = Description.createSuiteDescription(story.getDescription().asString());
 
-		int scenarioNumber = 1;
+		int count = 0;
 		for (Scenario scenario : story.getScenarios()) {
-			storyDescription.addChild(createScenarioDescription(scenario, scenarioNumber, testClass));
-			scenarioNumber++;
+			count++;
+			storyDescription.addChild(createScenarioDescription(prefix + ":" + count, scenario, testClass));
 		}
 
 		return storyDescription;
 	}
 
-	private static Description createScenarioDescription(Scenario scenario, Integer scenarioNumber, Class<?> testClass) {
-		Description scenarioDescrption = Description.createSuiteDescription("Scenario " + scenarioNumber + ": " + scenario.getTitle(), new Annotation[0]);
+	private static Description createScenarioDescription(String prefix, Scenario scenario, Class<?> testClass) {
 
-		int stepNumber = 1;
-		for (String stepDescription : scenario.getSteps()) {
-			String context = JUnitStoryRunner.getStoryCounter() + "" + scenarioNumber + "" + stepNumber + " - ";
-			scenarioDescrption.addChild(createStepDescription(context, stepDescription, testClass));
-			stepNumber++;
+		Description scenarioDescription = Description.createSuiteDescription("Scenario: " + scenario.getTitle());
+
+		int count = 0;
+
+		if (scenario.getExamplesTable().getRows().isEmpty()) {
+
+			for (String stepDescription : scenario.getSteps()) {
+
+				if (!stepDescription.startsWith(COMMENT_PREFIX)) {
+					count++;
+					scenarioDescription.addChild(Description.createTestDescription(testClass, prefix + ":" + count
+							+ " - " + stepDescription));
+				}
+			}
+
+		} else {
+
+			for (Map<String, String> row : scenario.getExamplesTable().getRows()) {
+
+				for (String stepDescription : scenario.getSteps()) {
+
+					if (!stepDescription.startsWith(COMMENT_PREFIX)) {
+						count++;
+						scenarioDescription.addChild(Description.createTestDescription(testClass, prefix + ":" + count
+								+ " - " + replaceRowValues(stepDescription, row)));
+					}
+				}
+			}
 		}
 
-		return scenarioDescrption;
+		return scenarioDescription;
 	}
 
-	private static Description createStepDescription(String context, String description, Class<?> stepClass) {
-		return Description.createTestDescription(stepClass, context + description);
-	}
+	private static String replaceRowValues(String stepDescription, Map<String, String> values) {
 
+		for (Map.Entry<String, String> value : values.entrySet()) {
+			stepDescription = stepDescription.replace("<" + value.getKey() + ">", "<" + value.getValue() + ">");
+		}
+		return stepDescription;
+	}
 }
