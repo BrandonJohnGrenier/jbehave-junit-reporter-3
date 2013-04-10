@@ -1,5 +1,5 @@
 <project name="jbehave-junit-reporter-3" basedir=".">
-	<property name="version" value="0.6.1" />
+	<property name="version" value="0.6.2" />
 	<property name="name" value="jbehave-junit-reporter-3" />
 	<property name="bin.dir" value="binaries" />
 	<property name="src.dir" value="src" />
@@ -68,6 +68,22 @@
 		</copy>
 
 		<zip destfile="${name}.${version}.zip" basedir="${dist.dir}" />
+	</target>
+	
+	<target name="deploy" depends="jar">
+		<exec dir="${bin.dir}" executable="cmd">
+			<arg value="/c"/>
+			<arg value="C:\\maven\\bin\\mvn.bat"/>
+			<arg value="deploy:deploy-file"/>
+			<arg value="-DgroupId=brandonjohngrenier"/>
+			<arg value="-DartifactId=jbehave-junit-reporter"/>
+			<arg value="-Dversion=3.${version}"/>
+			<arg value="-Dpackaging=jar"/>
+			<arg value="-Dfile=${name}.${version}.jar"/>
+			<arg value="-Dsources=${name}.${version}-sources.jar"/>
+			<arg value="-DrepositoryId=Atena-Nexus"/>
+			<arg value="-Durl=http://atena:8081/nexus/content/repositories/releases"/>
+		</exec>
 	</target>
 
 </project>
