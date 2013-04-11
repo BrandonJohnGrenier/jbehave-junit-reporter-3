@@ -40,7 +40,9 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 		JUnitStoryReporter.getInstance().setDescription(description);
 
 		try {
-		super.run(notifier);
+
+			annotationBuilder().buildEmbedder().runStoriesAsPaths(annotationBuilder().findPaths());
+
 		} catch (RunningStoriesFailed rsf) {
 			System.out.println(getClass().getSimpleName() + ": " + rsf.getClass().getSimpleName() + " ignored");
 		}

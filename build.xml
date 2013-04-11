@@ -1,5 +1,5 @@
 <project name="jbehave-junit-reporter-3" basedir=".">
-	<property name="version" value="0.6.3" />
+	<property name="version" value="0.6.4" />
 	<property name="name" value="jbehave-junit-reporter-3" />
 	<property name="bin.dir" value="binaries" />
 	<property name="src.dir" value="src" />
