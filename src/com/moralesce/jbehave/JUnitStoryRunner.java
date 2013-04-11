@@ -17,7 +17,7 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 
 	public JUnitStoryRunner(Class<?> testClass) throws Exception {
 		super(testClass);
-		AnnotationBuilder builder = new AnnotationBuilder(testClass);
+		AnnotationBuilder builder = annotationBuilder();
 		StoryManager manager = builder.buildEmbedder().storyManager();
 
 		List<Story> stories = new LinkedList<Story>();

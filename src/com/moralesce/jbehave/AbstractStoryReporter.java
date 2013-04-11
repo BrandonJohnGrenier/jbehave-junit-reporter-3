@@ -119,7 +119,7 @@ public abstract class AbstractStoryReporter implements StoryReporter {
 
 	@Override
 	public void pending(String step) {
-
+		stepCounter++;
 	}
 
 	@Override
