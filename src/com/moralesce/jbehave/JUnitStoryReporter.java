@@ -55,7 +55,9 @@ public class JUnitStoryReporter extends AbstractStoryReporter {
 	public void pending(String key) {
 		super.pending(key);
 
-		this.notifier.fireTestIgnored(step);
+		step = scenario.getChildren().get(stepCounter - 1);
+
+		this.notifier.fireTestFailure(new Failure(step, new RuntimeException("Unknown step")));
 		step = null;
 	}
 

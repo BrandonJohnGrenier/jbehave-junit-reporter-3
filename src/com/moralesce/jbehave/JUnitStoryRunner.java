@@ -17,7 +17,7 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 
 	public JUnitStoryRunner(Class<?> testClass) throws Exception {
 		super(testClass);
-		AnnotationBuilder builder = new AnnotationBuilder(testClass);
+		AnnotationBuilder builder = annotationBuilder();
 		StoryManager manager = builder.buildEmbedder().storyManager();
 
 		List<Story> stories = new LinkedList<Story>();
@@ -40,7 +40,9 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 		JUnitStoryReporter.getInstance().setDescription(description);
 
 		try {
-		super.run(notifier);
+
+			annotationBuilder().buildEmbedder().runStoriesAsPaths(annotationBuilder().findPaths());
+
 		} catch (RunningStoriesFailed rsf) {
 			System.out.println(getClass().getSimpleName() + ": " + rsf.getClass().getSimpleName() + " ignored");
 		}
