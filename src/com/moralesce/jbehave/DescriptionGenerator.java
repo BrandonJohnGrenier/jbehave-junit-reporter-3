@@ -68,7 +68,7 @@ public final class DescriptionGenerator {
 				if (!stepDescription.startsWith(COMMENT_PREFIX)) {
 					count++;
 					scenarioDescription.addChild(Description.createTestDescription(testClass, prefix + ":" + count
-							+ " - " + stepDescription.replace("\n", "")));
+							+ " - " + singleLine(stepDescription)));
 				}
 			}
 
@@ -81,13 +81,17 @@ public final class DescriptionGenerator {
 					if (!stepDescription.startsWith(COMMENT_PREFIX)) {
 						count++;
 						scenarioDescription.addChild(Description.createTestDescription(testClass, prefix + ":" + count
-								+ " - " + replaceRowValues(stepDescription.replace("\n", ""), row)));
+								+ " - " + replaceRowValues(singleLine(stepDescription), row)));
 					}
 				}
 			}
 		}
 
 		return scenarioDescription;
+	}
+
+	private static String singleLine(String stepDescription) {
+		return stepDescription.replace("\n", "").replace("\r", "");
 	}
 
 	private static String replaceRowValues(String stepDescription, Map<String, String> values) {
