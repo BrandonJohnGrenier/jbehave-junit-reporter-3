@@ -1,6 +1,6 @@
 package com.moralesce.jbehave;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jbehave.core.configuration.AnnotationBuilder;
@@ -20,7 +20,7 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 		AnnotationBuilder builder = annotationBuilder();
 		StoryManager manager = builder.buildEmbedder().storyManager();
 
-		List<Story> stories = new LinkedList<Story>();
+		List<Story> stories = new ArrayList<Story>();
 		for (String path : builder.findPaths()) {
 			stories.add(manager.storyOfPath(path));
 		}
@@ -44,6 +44,7 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 			annotationBuilder().buildEmbedder().runStoriesAsPaths(annotationBuilder().findPaths());
 
 		} catch (RunningStoriesFailed rsf) {
+			rsf.printStackTrace();
 			System.out.println(getClass().getSimpleName() + ": " + rsf.getClass().getSimpleName() + " ignored");
 		}
 	}
