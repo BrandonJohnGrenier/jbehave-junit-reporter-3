@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.model.GivenStories;
+import org.jbehave.core.model.Lifecycle;
 import org.jbehave.core.model.Meta;
 import org.jbehave.core.model.Narrative;
 import org.jbehave.core.model.OutcomesTable;
@@ -154,5 +155,9 @@ public abstract class AbstractStoryReporter implements StoryReporter {
 	@Override
 	public void storyNotAllowed(Story story, String filter) {
 
+	}
+
+	@Override
+	public void lifecyle(Lifecycle lifecycle) {
 	}
 }
