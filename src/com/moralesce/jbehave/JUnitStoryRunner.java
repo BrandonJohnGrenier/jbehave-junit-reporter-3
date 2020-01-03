@@ -44,7 +44,10 @@ public class JUnitStoryRunner extends AnnotatedPathRunner {
 			annotationBuilder().buildEmbedder().runStoriesAsPaths(annotationBuilder().findPaths());
 
 		} catch (RunningStoriesFailed rsf) {
-			rsf.printStackTrace();
+			// Print message if there are failing scenarios
+			if (!rsf.getMessage().contains("scenariosFailed=0")) {
+				System.out.println(rsf.getMessage());
+			}
 			System.out.println(getClass().getSimpleName() + ": " + rsf.getClass().getSimpleName() + " ignored");
 		}
 	}
