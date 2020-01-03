@@ -1,5 +1,5 @@
 <project name="jbehave-junit-reporter-3" basedir=".">
-	<property name="version" value="0.7" />
+	<property name="version" value="0.8" />
 	<property name="name" value="jbehave-junit-reporter-3" />
 	<property name="bin.dir" value="binaries" />
 	<property name="src.dir" value="src" />
@@ -81,8 +81,8 @@
 			<arg value="-Dpackaging=jar"/>
 			<arg value="-Dfile=${name}.${version}.jar"/>
 			<arg value="-Dsources=${name}.${version}-sources.jar"/>
-			<arg value="-DrepositoryId=Atena-Nexus"/>
-			<arg value="-Durl=http://atena:8081/nexus/content/repositories/releases"/>
+			<arg value="-DrepositoryId=artifactory"/>
+			<arg value="-Durl=http://artifactory.ist.com/artifactory/maven-releases"/>
 		</exec>
 	</target>
 
