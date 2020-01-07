@@ -1,5 +1,5 @@
 <project name="jbehave-junit-reporter-3" basedir=".">
-	<property name="version" value="0.8" />
+	<property name="version" value="0.9" />
 	<property name="name" value="jbehave-junit-reporter-3" />
 	<property name="bin.dir" value="binaries" />
 	<property name="src.dir" value="src" />
@@ -73,7 +73,7 @@
 	<target name="deploy" depends="jar">
 		<exec dir="${bin.dir}" executable="cmd">
 			<arg value="/c"/>
-			<arg value="C:\\maven\\bin\\mvn.bat"/>
+			<arg value="C:\\maven\\bin\\mvn.cmd"/>
 			<arg value="deploy:deploy-file"/>
 			<arg value="-DgroupId=brandonjohngrenier"/>
 			<arg value="-DartifactId=jbehave-junit-reporter"/>
